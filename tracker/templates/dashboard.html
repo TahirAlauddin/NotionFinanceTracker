@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <h3>Your Financial Records</h3>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Actions</th> <!-- New Column for Actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.date }}</td>
+                <td>{{ record.amount }}</td>
+                <td>{{ record.category }}</td>
+                <td>{{ record.description }}</td>
+                <td>
+                    <a href="{% url 'update_record' record.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_record' record.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'create_record' %}" class="btn btn-success mt-3">Add New Record</a>
+    
+</div>
+
+
+{% endblock content %}
